@@ -11,21 +11,21 @@ public:
   ~Node();
 
   //Getters and Setters for Left Node
-  Node* getLeft;
+  Node* getLeft();
   void setLeft(Node* newLeft);
 
   //Getters and Setters for Right Node
-  Node* getRight;
+  Node* getRight();
   void setRight(Node* newRight);
 
   //Getters and Setters for Value
-  int* getValue();
+  int getValue();
   void setValue(int newInt);
 
 private:
   Node* left;
   Node* right;
-  int* value;
+  int value;
 };
 
 #endif
