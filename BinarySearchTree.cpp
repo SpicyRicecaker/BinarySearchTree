@@ -6,16 +6,21 @@
 int getFileInputChoice(); //Gets an int that is used to decide between console and file input
 void getInput(char* input); //Gets console input, stores into input
 void getFileInput(char* input); //Gets file input, stores into input
-void bubbleIn(); //Inserts a Node 
-void bubbleOut(); //Deletes a Node 
-void bubbleScry(); //Searches for a Node
+int getActionChoice(char* input); //Gets an int that is used to decide between add, delete, search, print, or quit
+void bubbleIn(Node* bubby, int toAdd); //Inserts a number
+void bubbleOut(Node* bubby, int toDelete); //Deletes all numbers of a specified value 
+void bubbleScry(Node* bubby, int toSearch); //Searches for if a number is in the tree
 void bubblePop(); //Quits the program
 
 using namespace std;
 
 int main(){
+  //Input variable
   char inp[999];
   char* input = &inp[0];
+
+  //Root node of binary search tree
+  Node* bubby = NULL;
 
   bool running = true;
 
@@ -35,8 +40,8 @@ int main(){
     int inputLength = strlen(input);
     for(int a = 0; a < inputLength; ++a){
       if(strcmp(input, " ") == 0 || a == inputLength - 1){
-        //Add the number to the binary search tree
-        bubbleIn();
+        //Convert the string to in, and add the number to the binary search tree
+        bubbleIn(bubby, atoi(buffer));
         //Then reset counter and buffer
         counter = 0;
         buffer = new char[5]();
@@ -44,20 +49,28 @@ int main(){
       buffer[counter++] = input[a];
     }
 
-    //While adding completed numbers into the tree
-
-    //Ask if user wants to 
-
-    //Add
-
-    //Delete
-
-    //Search
-
-    //Print 
-
-    //Quit
-
+    //Then, ask if user wants to...
+    bool moddingTree = true;
+    while(moddingTree){
+      switch(getActionChoice(input)){
+        //Add
+      case 1:
+        break;
+        //Delete
+      case 2:
+        break;
+        //Search
+      case 3:
+        break;
+        //Print 
+      case 4:
+        break;
+      case 5:
+        //Quit
+        moddingTree = false;
+        break;
+      }
+    }
   }
 }
 
@@ -97,4 +110,28 @@ void getFileInput(char* input){
     stream.open(input);
   }
   stream.getline(input, 999);
+}
+
+int getActionChoice(char* input){
+  int actionChoice = 0;
+  //While input does not equal 1, 2, 3, 4, or 5
+  while(true){
+    cout << "Please enter \"add\" to add a number to the tree, \"delete\" to delete all instances of a number in the tree, \"search\" to check if a number is in the tree, \"print\" to print the tree, or \"quit\" to exit the program" << endl;
+    getInput(input);
+    int inputLen = strlen(input);
+    for(int a = 0; a < inputLen; ++a){
+      input[a] = toupper(input[a]);
+    }
+    if(strcmp(input, "ADD") == 0){
+return 1;
+    }else if(strcmp(input, "DELETE") == 0){
+return 2;
+    }else if(strcmp(input, "SEARCH") == 0){
+return 3;
+    }else if(strcmp(input, "PRINT") == 0){
+return 4;
+    }else if(strcmp(input, "QUIT") == 0){
+return 5;
+}
+  }
 }
