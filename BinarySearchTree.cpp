@@ -7,8 +7,8 @@ int getFileInputChoice(); //Gets an int that is used to decide between console a
 void getInput(char* input); //Gets console input, stores into input
 void getFileInput(char* input); //Gets file input, stores into input
 int getActionChoice(char* input); //Gets an int that is used to decide between add, delete, search, print, or quit
-void bubbleIn(Node* bubby, int toAdd); //Inserts a number
-void bubbleOut(Node* bubby, int toDelete); //Deletes all numbers of a specified value 
+void bubbleIn(Node* &bubby, int toAdd); //Inserts a number
+void bubbleOut(Node* &bubby, int toDelete); //Deletes all numbers of a specified value 
 void bubbleScry(Node* bubby, int toSearch); //Searches for if a number is in the tree
 void bubblePop(); //Quits the program
 
@@ -55,6 +55,7 @@ int main(){
       switch(getActionChoice(input)){
         //Add
       case 1:
+
         break;
         //Delete
       case 2:
@@ -116,7 +117,7 @@ int getActionChoice(char* input){
   int actionChoice = 0;
   //While input does not equal 1, 2, 3, 4, or 5
   while(true){
-    cout << "Please enter \"add\" to add a number to the tree, \"delete\" to delete all instances of a number in the tree, \"search\" to check if a number is in the tree, \"print\" to print the tree, or \"quit\" to exit the program" << endl;
+    cout << "Now, please enter \"add\" to add a number to the tree, \"delete\" to delete all instances of a number in the tree, \"search\" to check if a number is in the tree, \"print\" to print the tree, or \"quit\" to exit the program" << endl;
     getInput(input);
     int inputLen = strlen(input);
     for(int a = 0; a < inputLen; ++a){
@@ -133,5 +134,32 @@ return 4;
     }else if(strcmp(input, "QUIT") == 0){
 return 5;
 }
+    cout << "Invalid Input." << endl;
   }
+}
+
+//Inserts a number
+void bubbleIn(Node* &bubby, int toAdd){
+  //First, we have to check the null case
+  if(bubby == NULL){
+    bubby = new Node(toAdd);
+  }
+  //Then, we'll just compare the num to the left and right child, and traverse down the tree until there is an open node
+  
+
+  return;
+}
+
+//Deletes all numbers of a specified value
+void bubbleOut(Node* &bubby, int toDelete){
+  
+}
+
+//Searches for if a number is in the tree
+void bubbleScry(Node* bubby, int toSearch){
+  
+}
+//Quits the program
+void bubblePop(){
+  
 }
