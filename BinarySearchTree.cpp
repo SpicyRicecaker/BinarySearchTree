@@ -11,6 +11,7 @@ void bubbleIn(Node* &bubby, int toAdd); //Inserts a number
 void bubbleOut(Node* &bubby, int toDelete); //Deletes all numbers of a specified value 
 void bubbleScry(Node* bubby, int toSearch); //Searches for if a number is in the tree
 void bubblePop(); //Quits the program
+void bubbleHelp(); //Prints out help
 
 using namespace std;
 
@@ -29,6 +30,7 @@ int main(){
     switch (getFileInputChoice()){
     case 1:
       //Get console input
+      cout << "Please enter your input then." << endl;
       getInput(input);
     case 2:
       //Get file input
@@ -51,6 +53,7 @@ int main(){
 
     //Then, ask if user wants to...
     bool moddingTree = true;
+    cout << "Numbers inserted. Now moving to tree modding phase. Type \"help\" for help!" << endl;
     while(moddingTree){
       switch(getActionChoice(input)){
         //Add
@@ -70,6 +73,9 @@ int main(){
         //Quit
         moddingTree = false;
         break;
+      case 6:
+        bubbleHelp();
+        break;
       }
     }
   }
@@ -77,23 +83,27 @@ int main(){
 
 //This function makes the user decide on console input or file input
 int getFileInputChoice(){
-  int input = 0;
+  char input[4];
   //While input does not equal 1 or 2
-  while(input != 1 && input != 2){
-    cout << "Please enter (1) for console input or (2) for file input." << endl;
+  cout << "Please enter (1) for console input or (2) for file input." << endl;
+  while(true){
     //Get input
-    cin >> input;
+    cin.getline(input, 4);
     cin.clear();
     cin.ignore(999, '\n');
+    if(strcmp(input, (char*) "1") == 0){
+      return 1;
+    }else if(strcmp(input, (char*) "2") == 0){
+      return 2;
+    }
+    cout << "Please enter a valid number." << endl;
   }
-  return input;
 }
 
 
 //This function takes in user input and sets the input variable equal to it
 void getInput(char* input){
   do {
-    cout << "Please enter something" << endl;
     cin.getline(input, 999);
     cin.clear();
     if(strcmp(input, "") != 0){
@@ -115,25 +125,26 @@ void getFileInput(char* input){
 
 int getActionChoice(char* input){
   int actionChoice = 0;
-  //While input does not equal 1, 2, 3, 4, or 5
+  //While input does not equal 1, 2, 3, 4, 5, or 6
   while(true){
-    cout << "Now, please enter \"add\" to add a number to the tree, \"delete\" to delete all instances of a number in the tree, \"search\" to check if a number is in the tree, \"print\" to print the tree, or \"quit\" to exit the program" << endl;
     getInput(input);
     int inputLen = strlen(input);
     for(int a = 0; a < inputLen; ++a){
       input[a] = toupper(input[a]);
     }
     if(strcmp(input, "ADD") == 0){
-return 1;
+      return 1;
     }else if(strcmp(input, "DELETE") == 0){
-return 2;
+      return 2;
     }else if(strcmp(input, "SEARCH") == 0){
-return 3;
+      return 3;
     }else if(strcmp(input, "PRINT") == 0){
-return 4;
+      return 4;
     }else if(strcmp(input, "QUIT") == 0){
-return 5;
-}
+      return 5;
+    }else if(strcmp(input, "HELP") == 0){
+      return 6;
+    }
     cout << "Invalid Input." << endl;
   }
 }
@@ -144,10 +155,28 @@ void bubbleIn(Node* &bubby, int toAdd){
   if(bubby == NULL){
     bubby = new Node(toAdd);
   }
-  //Then, we'll just compare the num to the left and right child, and traverse down the tree until there is an open node
-  
-
-  return;
+  //If the current number is greater than the current node
+  if(toAdd > bubby->getValue()){
+    Node* temp = bubby->getRight();
+    //If there is a left subtree
+    if(temp != NULL){
+      //Recurse
+      bubbleIn(temp, toAdd);
+    }else{
+      //Otherwise just add the right node
+      bubby->setRight(temp);
+    }
+  }else{ //If the current number is less than or equal to the current node
+    Node* temp = bubby->getLeft();
+    //If there is a right subtree
+    if(temp != NULL){
+      //Recurse
+      bubbleIn(temp, toAdd);
+    }else{
+      //Otherwise just add the left node
+      bubby->setLeft(temp);
+    }
+  }
 }
 
 //Deletes all numbers of a specified value
@@ -162,4 +191,8 @@ void bubbleScry(Node* bubby, int toSearch){
 //Quits the program
 void bubblePop(){
   
+}
+
+void bubbleHelp(){
+  cout << "\n----------\nEnter \"add\" to add a number to the tree,\n\"delete\" to delete all instances of a number in the tree,\n\"search\" to check if a number is in the tree,\n\"print\" to print the tree,\nor \"quit\" to exit the program.\nType \"help\" again to reprint this list.\n----------\n" << endl;
 }
