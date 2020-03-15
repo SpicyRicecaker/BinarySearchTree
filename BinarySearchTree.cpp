@@ -50,6 +50,7 @@ int main(){
         //Then reset counter and buffer
         counter = 0;
         buffer = new char[4]();
+        continue;
       }
       buffer[counter++] = input[a];
     }
@@ -164,6 +165,7 @@ void bubbleIn(Node* &bubby, int toAdd){
   //First, we have to check the null case
   if(bubby == NULL){
     bubby = new Node(toAdd);
+    return;
   }
   //If the current number is greater than the current node
   if(toAdd > bubby->getValue()){
@@ -210,9 +212,9 @@ void airBubble(Node* bubby, int depth){
   airBubble(bubby->getRight(), depth+1);
   //Print out root
   for(int a = 0; a < depth; ++a){
-    cout << "  ";
+    cout << "    ";
   }
-  cout << bubby->getValue() << endl;
+  cout << bubby->getValue() << "\n" << endl;
   //Recurse to the left, incrementing the depth counter
   airBubble(bubby->getLeft(), depth+1);
 }
