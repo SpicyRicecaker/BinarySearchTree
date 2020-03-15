@@ -10,6 +10,7 @@ int getActionChoice(char* input); //Gets an int that is used to decide between a
 void bubbleIn(Node* &bubby, int toAdd); //Inserts a number
 void bubbleOut(Node* &bubby, int toDelete); //Deletes all numbers of a specified value 
 void bubbleScry(Node* bubby, int toSearch); //Searches for if a number is in the tree
+void airBubble(Node* bubby, int depth); //Prints all numbers in the tree!
 void bubblePop(); //Quits the program
 void bubbleHelp(); //Prints out help
 
@@ -32,21 +33,23 @@ int main(){
       //Get console input
       cout << "Please enter your input then." << endl;
       getInput(input);
+      break;
     case 2:
       //Get file input
       getFileInput(input);
+      break;
     }
     //Then we need to parse out the input
-    char* buffer = new char[5]();
+    char* buffer = new char[4]();
     int counter = 0;
     int inputLength = strlen(input);
-    for(int a = 0; a < inputLength; ++a){
-      if(strcmp(input, " ") == 0 || a == inputLength - 1){
+    for(int a = 0; a <= inputLength; ++a){
+      if(input[a] == ' ' || a == inputLength){
         //Convert the string to in, and add the number to the binary search tree
         bubbleIn(bubby, atoi(buffer));
         //Then reset counter and buffer
         counter = 0;
-        buffer = new char[5]();
+        buffer = new char[4]();
       }
       buffer[counter++] = input[a];
     }
@@ -58,7 +61,9 @@ int main(){
       switch(getActionChoice(input)){
         //Add
       case 1:
-
+        cout << "Please enter the number to add" << endl;
+        getInput(input);
+        bubbleIn(bubby, atoi(input));
         break;
         //Delete
       case 2:
@@ -68,6 +73,7 @@ int main(){
         break;
         //Print 
       case 4:
+        airBubble(bubby, 0);
         break;
       case 5:
         //Quit
@@ -88,12 +94,11 @@ int getFileInputChoice(){
   cout << "Please enter (1) for console input or (2) for file input." << endl;
   while(true){
     //Get input
-    cin.getline(input, 4);
+    cin.getline(input, 999);
     cin.clear();
-    cin.ignore(999, '\n');
-    if(strcmp(input, (char*) "1") == 0){
+    if(strcmp(input, "1") == 0){
       return 1;
-    }else if(strcmp(input, (char*) "2") == 0){
+    }else if(strcmp(input, "2") == 0){
       return 2;
     }
     cout << "Please enter a valid number." << endl;
@@ -103,22 +108,27 @@ int getFileInputChoice(){
 
 //This function takes in user input and sets the input variable equal to it
 void getInput(char* input){
-  do {
+  while(true){
     cin.getline(input, 999);
     cin.clear();
     if(strcmp(input, "") != 0){
       break;
     }
-  }while(strcmp(input, "") != 0);
+    cout << "No input detected" << endl;
+  }
 }
 
 //This function reads in file input as a line and sets the input variable equal to it
 void getFileInput(char* input){
   ifstream stream;
-  while(!stream.good()){
+  while(true){
     cout << "Please enter the name of your file..." << endl;
     getInput(input);
     stream.open(input);
+    if(stream.good()){
+      break;
+    }
+    cout << "That file does not exist..." << endl;
   }
   stream.getline(input, 999);
 }
@@ -157,24 +167,24 @@ void bubbleIn(Node* &bubby, int toAdd){
   }
   //If the current number is greater than the current node
   if(toAdd > bubby->getValue()){
-    Node* temp = bubby->getRight();
+    Node* right = bubby->getRight();
     //If there is a left subtree
-    if(temp != NULL){
+    if(right != NULL){
       //Recurse
-      bubbleIn(temp, toAdd);
+      bubbleIn(right, toAdd);
     }else{
       //Otherwise just add the right node
-      bubby->setRight(temp);
+      bubby->setRight(new Node(toAdd));
     }
   }else{ //If the current number is less than or equal to the current node
-    Node* temp = bubby->getLeft();
+    Node* left = bubby->getLeft();
     //If there is a right subtree
-    if(temp != NULL){
+    if(left != NULL){
       //Recurse
-      bubbleIn(temp, toAdd);
+      bubbleIn(left, toAdd);
     }else{
       //Otherwise just add the left node
-      bubby->setLeft(temp);
+      bubby->setLeft(new Node(toAdd));
     }
   }
 }
@@ -188,6 +198,25 @@ void bubbleOut(Node* &bubby, int toDelete){
 void bubbleScry(Node* bubby, int toSearch){
   
 }
+
+//Prints out the entire tree using inorder traversal from the right node to the left node
+void airBubble(Node* bubby, int depth){
+  //If null
+  if(bubby == NULL){
+    //We out!
+    return;
+  }
+  //Recurse to the right, incrementing the depth counter
+  airBubble(bubby->getRight(), depth+1);
+  //Print out root
+  for(int a = 0; a < depth; ++a){
+    cout << "  ";
+  }
+  cout << bubby->getValue() << endl;
+  //Recurse to the left, incrementing the depth counter
+  airBubble(bubby->getLeft(), depth+1);
+}
+
 //Quits the program
 void bubblePop(){
   
@@ -196,3 +225,4 @@ void bubblePop(){
 void bubbleHelp(){
   cout << "\n----------\nEnter \"add\" to add a number to the tree,\n\"delete\" to delete all instances of a number in the tree,\n\"search\" to check if a number is in the tree,\n\"print\" to print the tree,\nor \"quit\" to exit the program.\nType \"help\" again to reprint this list.\n----------\n" << endl;
 }
+
