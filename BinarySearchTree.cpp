@@ -9,7 +9,7 @@ void getFileInput(char* input); //Gets file input, stores into input
 int getActionChoice(char* input); //Gets an int that is used to decide between add, delete, search, print, or quit
 void bubbleIn(Node* &bubby, int toAdd); //Inserts a number
 void bubbleOut(Node* &bubby, int toDelete); //Deletes all numbers of a specified value 
-void bubbleScry(Node* bubby, int toSearch); //Searches for if a number is in the tree
+int bubbleScry(Node* bubby, int toSearch, int boba); //Searches for if a number is in the tree
 void airBubble(Node* bubby, int depth); //Prints all numbers in the tree!
 void bubblePop(); //Quits the program
 void bubbleHelp(); //Prints out help
@@ -60,27 +60,38 @@ int main(){
     cout << "Numbers inserted. Now moving to tree modding phase. Type \"help\" for help!" << endl;
     while(moddingTree){
       switch(getActionChoice(input)){
-        //Add
       case 1:
+        //Add
         cout << "Please enter the number to add" << endl;
         getInput(input);
         bubbleIn(bubby, atoi(input));
         break;
-        //Delete
       case 2:
+        //Delete
+        //We need to remove all instances of a number, and alert the user how many instances were removed.
+        cout << "Please enter the number to delete" << endl;
+        getInput(input);
+        for(int a = 0; a < bubbleScry(bubby, atoi(input), 0); ++a){
+          bubbleOut(bubby, atoi(input));
+        }
         break;
-        //Search
       case 3:
+        //Search
+        //Scans for all instances of a number in the tree
+        cout << "Please enter the number to search for" << endl;
+        getInput(input);
+        bubbleScry(bubby, atoi(input), 0);
         break;
-        //Print 
       case 4:
-        airBubble(bubby, 0);
+        //Print 
+        airBubble(bubby, atoi(input));
         break;
       case 5:
         //Quit
         moddingTree = false;
         break;
       case 6:
+        //Help
         bubbleHelp();
         break;
       }
@@ -197,8 +208,22 @@ void bubbleOut(Node* &bubby, int toDelete){
 }
 
 //Searches for if a number is in the tree
-void bubbleScry(Node* bubby, int toSearch){
-  
+int bubbleScry(Node* bubby, int toSearch, int boba){
+  int inQuestion = bubby->getValue();
+  //If node is less than search number
+  if(toSearch < inQuestion){
+
+  }
+
+  //If node is equal to search number
+  if(toSearch == inQuestion){
+    
+  }
+
+  //If node is greater than search number
+  if(toSearch > inQuestion){
+    
+  }
 }
 
 //Prints out the entire tree using inorder traversal from the right node to the left node
