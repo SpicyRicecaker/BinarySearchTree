@@ -80,7 +80,7 @@ int main(){
         //Scans for all instances of a number in the tree
         cout << "Please enter the number to search for" << endl;
         getInput(input);
-        bubbleScry(bubby, atoi(input), 0);
+        cout << "There are \"" << bubbleScry(bubby, atoi(input), 0) << "\" occurrences of " << atoi(input) << " in the tree." << endl;
         break;
       case 4:
         //Print 
@@ -210,20 +210,37 @@ void bubbleOut(Node* &bubby, int toDelete){
 //Searches for if a number is in the tree
 int bubbleScry(Node* bubby, int toSearch, int boba){
   int inQuestion = bubby->getValue();
+  Node* left = bubby->getLeft();
+  Node* right = bubby->getRight();
   //If node is less than search number
   if(toSearch < inQuestion){
-
+    //Check if there is a left node
+    if(left != NULL){
+      return bubbleScry(left, toSearch, boba);
+    }else{
+      return boba;
+    }
   }
-
   //If node is equal to search number
   if(toSearch == inQuestion){
-    
+    ++boba;
+    if(left == NULL){
+      return boba;
+    }else{
+      return bubbleScry(left, toSearch, boba);
+    }
   }
 
   //If node is greater than search number
   if(toSearch > inQuestion){
-    
+    if(right != NULL){
+      return bubbleScry(right, toSearch, boba);
+    }else{
+      return boba;
+    }
   }
+  //Should never happen?
+  return -1;
 }
 
 //Prints out the entire tree using inorder traversal from the right node to the left node
