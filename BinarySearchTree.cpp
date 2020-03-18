@@ -333,7 +333,7 @@ void bubbleOut(Node* &past, Node* &current, int toDelete){
         delete current;
         current = child;
         //Then tie in the past to the current
-        current->setRight(child);
+        past->setRight(child);
         return;
         //If the current is to the left, just keep that in mind also
       }else{
@@ -346,7 +346,7 @@ void bubbleOut(Node* &past, Node* &current, int toDelete){
         delete current;
         current = child;
         //Then tie in the past to the current
-        current->setRight(child);
+        past->setLeft(child);
         return;
         
       }
