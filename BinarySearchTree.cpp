@@ -346,7 +346,7 @@ void bubbleOut(Node* &past, Node* &current, int toDelete){
         delete current;
         current = child;
         //Then tie in the past to the current
-        current->setLeft(child);
+        current->setRight(child);
         return;
         
       }
