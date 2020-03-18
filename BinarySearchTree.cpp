@@ -106,7 +106,7 @@ int main(){
 
 //This function makes the user decide on console input or file input
 int getFileInputChoice(){
-  char input[4];
+  char input[999];
   //While input does not equal 1 or 2
   cout << "Please enter (1) for console input or (2) for file input." << endl;
   while(true){
@@ -228,6 +228,12 @@ void bubbleOut(Node* &past, Node* &current, int toDelete){
     //There are three possible cases
     //One is that there are no children
     if(left == NULL && right == NULL){
+      //If we're dealing with the root node
+      if(past == current){
+        delete current;
+        current = NULL;
+        return;
+      }
       //Then we just set the parent's children to nothing
       past->setLeft(NULL);
       past->setRight(NULL);
@@ -239,7 +245,15 @@ void bubbleOut(Node* &past, Node* &current, int toDelete){
     //One is that there is one child
     //First we have to figure out if the current node is the right or left node
     //We just have to swap the parent with the child
+    //If there are left children
     if((left != NULL && right == NULL)){
+      //If we're dealing with the root case
+      if(past == current){
+        //Set the root to the left
+        delete current;
+        current = left;
+        return;
+      }
       //Check if our current is the right or left child of the past
       if(past->getRight() == current){
         //If it's the right, then swap the parent's right with current left
@@ -253,7 +267,15 @@ void bubbleOut(Node* &past, Node* &current, int toDelete){
         current = NULL;
       }
       return;
+      //If there are right children
     }else if((left == NULL && right != NULL)){
+      //If we're dealing with the root case
+      if(past == current){
+        //Set the root to the right
+        delete current;
+        current = right;
+        return;
+      }
       //Check if our current is the right or left child of the past
       if(past->getRight() == current){
         //If it's the right, then swap the parent's right with current right
@@ -267,9 +289,75 @@ void bubbleOut(Node* &past, Node* &current, int toDelete){
         current = NULL;
       }
       return;
+    //If there are two children
+    }else{
+      //Then we'll first need to find the next "smallest" or "biggest" node.
+      //We'll implement the smallest this time. This means the the next node to the left, and the farthest to the right
+
+      //Start at the left node
+      Node* parent = left;
+      Node* child = left;
+      //Keep going until the very right is reached, keeping track of the parent
+      while(child->getRight() != NULL){
+        //Parent is child, and child is next right
+        parent = child;
+        child = child->getRight();
+      }
+      //So first the parent and child relationship must be broken off
+      parent->setRight(NULL);
+      //Even if there are no children, this should be fine.
+      //Next, we have to replace the current with the child.
+
+      //Be wary of root case!
+      if(past == current){
+        //Then we have to ensure the original root's right and left child is preserved, so tie the current child to that right child and left child
+        child->setRight(current->getRight());
+        //However, what if we have a case where we're tying the next left to the node itself? Well, just check it then!
+        if(current->getLeft() != child){
+          child->setLeft(current->getLeft());
+        }
+        delete current;
+        current = child;
+        return;
+      }
+      //If it's not a root case, then much of the same thing occurs, except we have to take into account the "past" node
+      //We have to figure out if the "current" node is the right or left of it's parent
+      //If the current is to the right, just keep that in mind when we're swapping
+      if(past->getRight() == current){
+        //We still have to ensure that the original root's right and left child are preserved
+        child->setRight(current->getRight());
+        if(current->getLeft() != child){
+          child->setLeft(current->getLeft());
+        }
+        //Set the current equal to the child
+        delete current;
+        current = child;
+        //Then tie in the past to the current
+        current->setRight(child);
+        return;
+        //If the current is to the left, just keep that in mind also
+      }else{
+        //We still have to ensure that the original root's right and left child are preserved
+        child->setRight(current->getRight());
+        if(current->getLeft() != child){
+          child->setLeft(current->getLeft());
+        }
+        //Set the current equal to the child
+        delete current;
+        current = child;
+        //Then tie in the past to the current
+        current->setLeft(child);
+        return;
+        
+      }
+
+      //Assume the case that there is no right
+      //Then we can just replace the current with the current left
+
+      //Assume the case that there is one more right
+      //Then we have to ensure the parent is pointing to NULL
+      //Then we can just replace the current with the current left
     }
-    
-    //One is we find the next smallest or biggest (left node, then rightmost node, or right node, leftmost node) and replace the deleted number with that node. We then move the left (or right) subtree over
   }
 
   //If node is greater than search number
