@@ -14,8 +14,8 @@ Node::Node(int newValue){
 Node::~Node(){
   //Might not need this I'm not sure
   //Remove left and right pointers
-  left = NULL;
-  right = NULL;
+  //left = NULL;
+  //right = NULL;
 }
 
 //Getters and setters for left node

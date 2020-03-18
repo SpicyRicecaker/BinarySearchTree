@@ -248,9 +248,7 @@ void bubbleOut(Node* &past, Node* &current, int toDelete){
         current = NULL;
       }else{
         //If it's the left, then swap the parent's right with current left
-        past->setLeft(left);
-        delete current;
-        current = NULL;
+        
       }
       return;
     }else if((left == NULL && right != NULL)){
@@ -262,9 +260,7 @@ void bubbleOut(Node* &past, Node* &current, int toDelete){
         current = NULL;
       }else{
         //If it's the left, then swap the parent's right with current right
-        past->setLeft(right);
-        delete current;
-        current = NULL;
+        
       }
       return;
     }
