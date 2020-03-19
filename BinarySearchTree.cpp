@@ -91,7 +91,10 @@ int main(){
         break;
       case 5:
         //Quit
+        cout << "Thanks for the bubble tea!" << endl;
         moddingTree = false;
+        //Deconstruct the tree
+        bubby = NULL;
         break;
       case 6:
         //Help
@@ -348,15 +351,7 @@ void bubbleOut(Node* &past, Node* &current, int toDelete){
         //Then tie in the past to the current
         past->setLeft(child);
         return;
-        
       }
-
-      //Assume the case that there is no right
-      //Then we can just replace the current with the current left
-
-      //Assume the case that there is one more right
-      //Then we have to ensure the parent is pointing to NULL
-      //Then we can just replace the current with the current left
     }
   }
 
