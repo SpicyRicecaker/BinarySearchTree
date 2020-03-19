@@ -11,7 +11,6 @@ void bubbleIn(Node* &bubby, int toAdd); //Inserts a number
 void bubbleOut(Node* &past, Node* &current, int toDelete); //Deletes all numbers of a specified value 
 int bubbleScry(Node* bubby, int toSearch, int boba); //Searches for if a number is in the tree
 void airBubble(Node* bubby, int depth); //Prints all numbers in the tree!
-void bubblePop(); //Quits the program
 void bubbleHelp(); //Prints out help
 
 using namespace std;
@@ -26,6 +25,7 @@ int main(){
 
   bool running = true;
 
+  //Program loop
   while(running){
     //First we get user input from console or file input
     switch (getFileInputChoice()){
@@ -62,13 +62,13 @@ int main(){
       int occurences = 0;
       switch(getActionChoice(input)){
       case 1:
-        //Add
+        //...Add
         cout << "Please enter the number to add" << endl;
         getInput(input);
         bubbleIn(bubby, atoi(input));
         break;
       case 2:
-        //Delete
+        //...Delete
         //We need to remove all instances of a number, and alert the user how many instances were removed.
         cout << "Please enter the number to delete" << endl;
         getInput(input);
@@ -79,31 +79,29 @@ int main(){
         cout << "Successfully deleted \"" << occurences << "\" occurences of " << atoi(input) << " in the tree." << endl;
         break;
       case 3:
-        //Search
+        //...Search
         //Scans for all instances of a number in the tree
         cout << "Please enter the number to search for" << endl;
         getInput(input);
         cout << "There are \"" << bubbleScry(bubby, atoi(input), 0) << "\" occurrences of " << atoi(input) << " in the tree." << endl;
         break;
       case 4:
-        //Print 
+        //...Print 
         airBubble(bubby, atoi(input));
         break;
       case 5:
-        //Quit
+        //...Quit
         cout << "Thanks for the bubble tea!" << endl;
         moddingTree = false;
         //Deconstruct the tree
         bubby = NULL;
         break;
       case 6:
-        //Help
+        //...Help
         bubbleHelp();
         break;
       }
     }
-    //Probably need to add something here like: "Do you want to make another tree?"
-    //And reinitialize everything if needed
   }
 }
 
@@ -153,8 +151,8 @@ void getFileInput(char* input){
   stream.getline(input, 999);
 }
 
+//This function gets the action choice and returns ints. Unneeded, but too lazy to remove, makes main look cleaner
 int getActionChoice(char* input){
-  int actionChoice = 0;
   //While input does not equal 1, 2, 3, 4, 5, or 6
   while(true){
     getInput(input);
@@ -417,11 +415,6 @@ void airBubble(Node* bubby, int depth){
   cout << bubby->getValue() << "\n" << endl;
   //Recurse to the left, incrementing the depth counter
   airBubble(bubby->getLeft(), depth+1);
-}
-
-//Quits the program
-void bubblePop(){
-  
 }
 
 void bubbleHelp(){
