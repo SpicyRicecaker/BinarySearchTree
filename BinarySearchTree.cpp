@@ -1,3 +1,9 @@
+/*
+  Author: Shengdong Li
+  Date: 3/19/20
+  Binary Search Tree: A program that can take in console or file input, create a binary tree based off of those inputs, which can then be modified through addition, searching, or deletion of new numbers, and displayed through print.
+ */
+
 #include <iostream>
 #include <cstring>
 #include <fstream>
