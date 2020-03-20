@@ -235,9 +235,12 @@ void bubbleOut(Node* &past, Node* &current, int toDelete){
         current = NULL;
         return;
       }
-      //Then we just set the parent's children to nothing
-      past->setLeft(NULL);
-      past->setRight(NULL);
+      //Then we have to find which child the current deleted node is
+      if(past->getLeft() == current){
+        past->setLeft(NULL);
+      }else{
+        past->setRight(NULL);
+      }
       //Then get rid of the node
       delete current;
       current = NULL;
